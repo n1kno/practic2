@@ -7,7 +7,8 @@
 · Односвязанный список
 <details>
   <summary>Нажмите, чтобы развернуть код</summary>
-```go
+
+	```go
 	
 	package main
 	
@@ -57,4 +58,4 @@
 		fmt.Println(stack.Pop()) 
 		fmt.Println(stack.Pop()) 
 	}
-```
+	```
