@@ -1,48 +1,42 @@
-package main
+package stack
 
-import "fmt"
-
-// Stack - структура стека
-type Stack struct {
-	items []int
+type Stack[T any] struct {
+	items []T
 }
 
-// Push - добавляет элемент на вершину стека
-func (s *Stack) Push(item int) {
-	// append добавляет элемент в конец среза
+func New[T any]() *Stack[T] {
+	return &Stack[T]{
+		items: make([]T, 0),
+	}
+}
+
+func (s *Stack[T]) Push(item T) {
 	s.items = append(s.items, item)
 }
 
-// Pop - удаляет и возвращает элемент с вершины стека
-func (s *Stack) Pop() int {
-	if len(s.items) == 0 {
-		return -1 
+func (s *Stack[T]) Pop() (T, bool) {
+	var zero T
+	if s.IsEmpty() {
+		return zero, false
 	}
 	
 	item := s.items[len(s.items)-1]
 	s.items = s.items[:len(s.items)-1]
-	
-	return item
+	return item, true
 }
 
-// Peek - возвращает элемент с вершины не удаляя его
-func (s *Stack) Peek() int {
-	if len(s.items) == 0 {
-		return -1
+func (s *Stack[T]) Peek() (T, bool) {
+	var zero T
+	if s.IsEmpty() {
+		return zero, false
 	}
-	return s.items[len(s.items)-1]
+	return s.items[len(s.items)-1], true
 }
 
-func main() {
-	stack := &Stack{}
-	
-	// Добавляем элементы
-	stack.Push(1) 
-	stack.Push(2) 
-	stack.Push(3) 
-	
-	// Извлекаем элементы 
-	fmt.Println(stack.Pop()) 
-	fmt.Println(stack.Pop()) 
-	fmt.Println(stack.Pop()) 
+func (s *Stack[T]) IsEmpty() bool {
+	return len(s.items) == 0
+}
+
+func (s *Stack[T]) Size() int {
+	return len(s.items)
 }
